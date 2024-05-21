@@ -4,13 +4,14 @@ const passport = require('passport')
 const User = require("../models/signIn");
 
 router.get('/', (req,res) => {
+    console.log("req.session.passport: " + req.session.passport)
     console.log("Is user authenticated after authentication:", req.isAuthenticated());
     //res.redirect('login/profile')
-    res.send("req.user: " + JSON.stringify(req.user))
+    res.send('Log')
 })     
 
 router.post('/', passport.authenticate('local', {
-        failureRedirect: '/signUp',
+        failureRedirect: '../signUp',
         failureFlash: true,
         successFlash:true
     }), (req, res) => {
@@ -42,7 +43,7 @@ router.get('/user/:userId', async (req, res) => {
     }
 });
 
-/* router.get('/status', (req, res) => {
+router.get('/status', (req, res) => {
   const isAut = isAuthenticated(req,res);
   console.log("isAut:" + isAut);
   if(!isAut){
@@ -52,23 +53,13 @@ router.get('/user/:userId', async (req, res) => {
     console.log("User is authenticated " + req.user)
     res.json({ authenticated: isAut, user: req.user }); 
   }
-  }); */
-
-router.post('/logOut', (req,res) =>{
-  req.logout(err => {
-    if (err) {
-      return res.status(500).json({ message: 'Logout failed' });
-    }
-    // Destroy the session
-    req.session.destroy(err => {
-      if (err) {
-        return res.status(500).json({ message: 'Session destruction failed' });
-      }
-      // Clear the session cookie
-      res.clearCookie('connect.sid'); // 'connect.sid' is the default cookie name for Express sessions
-      return res.status(200).json({ message: 'Logged out successfully' });
-    });
   });
+
+router.get('/logOut', (req,res) =>{
+    if (req.session) {
+        req.session.destroy();
+      }
+      res.send("Loged Out: " + req.user)
   }) 
  
 function isAuthenticated(req, res) {

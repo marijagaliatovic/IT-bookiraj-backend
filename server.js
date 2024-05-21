@@ -22,11 +22,9 @@ const store = MongoStore.create({
     autoRemove: 'native'
 });
 
-app.set('trust proxy', 1);
-
 app.use(cors({
-    //origin: 'http://localhost:3000', 
-    origin: 'https://it-bookiraj-frontend.vercel.app',
+    origin: 'http://localhost:3000', 
+    //origin: 'https://it-bookiraj-frontend.vercel.app',
     credentials: true
   }));
 
@@ -34,8 +32,6 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'none',
     store: store,
     cookie: { maxAge: 30000 }
 }))
@@ -73,6 +69,5 @@ app.get('/', (req,res)=>{
 app.listen(process.env.PORT || 8080)
 
  
-
 
 
