@@ -55,7 +55,7 @@ router.get('/user/:userId', async (req, res) => {
   }
   }); */
 
-router.get('/logOut', (req,res) =>{
+router.post('/logOut', (req,res) =>{
     if (req.session) {
       if (err) {
         return res.status(500).send('Failed to log out');
