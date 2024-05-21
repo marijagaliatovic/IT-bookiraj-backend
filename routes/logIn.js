@@ -56,10 +56,20 @@ router.get('/user/:userId', async (req, res) => {
   }); */
 
 router.post('/logOut', (req,res) =>{
-    if (req.session) {
-      req.session.destroy();
+  req.logout(err => {
+    if (err) {
+      return res.status(500).json({ message: 'Logout failed' });
     }
-    res.status(200).send('Logged out successfully');
+    // Destroy the session
+    req.session.destroy(err => {
+      if (err) {
+        return res.status(500).json({ message: 'Session destruction failed' });
+      }
+      // Clear the session cookie
+      res.clearCookie('connect.sid'); // 'connect.sid' is the default cookie name for Express sessions
+      return res.status(200).json({ message: 'Logged out successfully' });
+    });
+  });
   }) 
  
 function isAuthenticated(req, res) {
