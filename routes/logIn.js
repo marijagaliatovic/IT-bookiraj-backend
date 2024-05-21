@@ -43,7 +43,7 @@ router.get('/user/:userId', async (req, res) => {
     }
 });
 
-router.get('/status', (req, res) => {
+/* router.get('/status', (req, res) => {
   const isAut = isAuthenticated(req,res);
   console.log("isAut:" + isAut);
   if(!isAut){
@@ -53,13 +53,16 @@ router.get('/status', (req, res) => {
     console.log("User is authenticated " + req.user)
     res.json({ authenticated: isAut, user: req.user }); 
   }
-  });
+  }); */
 
 router.get('/logOut', (req,res) =>{
     if (req.session) {
-        req.session.destroy();
+      if (err) {
+        return res.status(500).send('Failed to log out');
       }
-      res.send("Loged Out: " + req.user)
+      req.session.destroy();
+    }
+    res.status(200).send('Logged out successfully');
   }) 
  
 function isAuthenticated(req, res) {
