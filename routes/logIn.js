@@ -43,7 +43,7 @@ router.get('/user/:userId', async (req, res) => {
     }
 });
 
-/* router.get('/status', (req, res) => {
+router.get('/status', (req, res) => {
   const isAut = isAuthenticated(req,res);
   console.log("isAut:" + isAut);
   if(!isAut){
@@ -53,7 +53,7 @@ router.get('/user/:userId', async (req, res) => {
     console.log("User is authenticated " + req.user)
     res.json({ authenticated: isAut, user: req.user }); 
   }
-  }); */
+  }); 
 
 router.post('/logOut', (req,res) =>{
   req.logout(err => {
