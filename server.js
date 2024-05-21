@@ -9,18 +9,18 @@ const bodyParser = require('body-parser')
 const passport = require('passport') //authentication middleware 
 const flash = require('express-flash')
 const session = require('express-session')
-const MongoDBStore = require('connect-mongodb-session')(session);
+const MongoStore = require('connect-mongo');
 const methodOverride = require('method-override')
 const initializePassport = require('./passport-config.js')
 const mongoose = require('mongoose')
 const User = require("./models/signIn");
 
-const store = new MongoDBStore({
-    uri: process.DATABASE_URL,
-    collection: 'mySessions',
-    ttl: 14 * 24 * 60 * 60,
-    autoRemove: 'native' 
-  });
+const store = MongoStore.create({
+    mongoUrl: process.env.DATABASE_URL,
+    collectionName: 'mySessions',
+    ttl: 14 * 24 * 60 * 60, // 14 days
+    autoRemove: 'native'
+});
 
 app.use(cors({
     //origin: 'http://localhost:3000', 
