@@ -67,6 +67,7 @@ router.post('/logOut', (req,res) =>{
       }
       // Clear the session cookie
       res.clearCookie('connect.sid'); // 'connect.sid' is the default cookie name for Express sessions
+      console.log("Session: " + res.session.User);
       return res.status(200).json({ message: 'Logged out successfully' });
     });
   });
