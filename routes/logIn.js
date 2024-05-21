@@ -4,8 +4,10 @@ const passport = require('passport')
 const User = require("../models/signIn");
 
 router.get('/', (req,res) => {
+    console.log("req.session.passport: " + req.session.passport)
     console.log("Is user authenticated after authentication:", req.isAuthenticated());
-    res.send("req.passport.session: " + req.passport.session + "req.session: " + req.session)
+    //res.redirect('login/profile')
+    res.send("req.session: " + req.session)
 })     
 
 router.post('/', passport.authenticate('local', {
@@ -16,7 +18,7 @@ router.post('/', passport.authenticate('local', {
          res.status(200).json(req.session);
         // Log session data 
         console.log("Is user authenticated after authentication:", req.isAuthenticated());
-        console.log("Session data after authenticaytion:", req.session, "Is user authenticated after authentication:", req.isAuthenticated());
+        console.log("Session data after authenticaytion:", req.session);
     })
 
 /* router.get('/profile', (req, res) => {
