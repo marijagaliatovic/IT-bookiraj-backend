@@ -47,11 +47,11 @@ router.get('/status', (req, res) => {
   const isAut = isAuthenticated(req,res);
   console.log("isAut:" + isAut);
   if(!isAut){
-    res.json({ authenticated: false, user: null });
+    return res.send({ authenticated: isAut, user: req.user });
   }
   else{
     console.log("User is authenticated " + req.user)
-    res.json({ authenticated: isAut, user: req.user }); 
+    return res.send({ authenticated: isAut, user: req.user }); 
   }
   }); 
 
