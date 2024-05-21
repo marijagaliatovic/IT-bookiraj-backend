@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport')
-const User = require("../models/signIn");
+//const User = require("../models/signIn");
 
 router.get('/', (req,res) => {
     console.log("req.session.passport: " + req.session.passport)
