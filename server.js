@@ -23,8 +23,8 @@ const store = MongoStore.create({
 });
 
 app.use(cors({
-    origin: 'http://localhost:3000', 
-    //origin: 'https://it-bookiraj-frontend.vercel.app',
+    //origin: 'http://localhost:3000', 
+    origin: 'https://it-bookiraj-frontend.vercel.app',
     credentials: true
   }));
 
