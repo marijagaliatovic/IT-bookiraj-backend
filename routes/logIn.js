@@ -73,13 +73,9 @@ router.post('/logOut', (req,res) =>{
   });
   }) 
  
-function isAuthenticated(req, res) {
-    if (req.isAuthenticated()) {
-      return true; // User is authenticated, proceed to the next middleware
-    }
-    //return res.status(401).json({ message: 'Unauthorized' }); 
-    if(req.user != null){
-      console.log("req.user" + req.user);
+function isAuthenticated(req, res) { 
+    if(req.passport.User){
+      console.log("req.user" + req.passport.user);
       return true;
     }
     return false;
