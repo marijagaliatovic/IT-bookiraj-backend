@@ -11,19 +11,19 @@ router.get('/', (req,res) => {
 })     
 
 router.post('/', passport.authenticate('local', {
-        failureRedirect: '/signUp',
+        failureRedirect: '../signUp',
         failureFlash: true,
         successFlash:true
     }), (req, res) => {
-         res.status(200).json(req.session);//do sad je bilo user
+         res.status(200).json(req.session);
         // Log session data 
         console.log("Is user authenticated after authentication:", req.isAuthenticated());
         console.log("Session data after authenticaytion:", req.session);
     })
 
-router.get('/profile', (req, res) => {
+/* router.get('/profile', (req, res) => {
     res.send('Welcome to your profile: ' + JSON.stringify(req.session));
-  });
+  }); */
     
 router.get('/user/:userId', async (req, res) => {
     const userId = req.params.userId; 
@@ -55,13 +55,13 @@ router.get('/status', (req, res) => {
   }
   });
 
-/*   router.get('/logOut', (req,res) =>{
+router.get('/logOut', (req,res) =>{
     if (req.session) {
         req.session.destroy();
       }
       res.send("Loged Out: " + req.user)
   }) 
- */
+ 
 function isAuthenticated(req, res) {
     if (req.isAuthenticated()) {
       return true; // User is authenticated, proceed to the next middleware
