@@ -22,6 +22,8 @@ const store = MongoStore.create({
     autoRemove: 'native'
 });
 
+app.set('trust proxy', 1);
+
 app.use(cors({
     //origin: 'http://localhost:3000', 
     origin: 'https://it-bookiraj-frontend.vercel.app',
@@ -32,6 +34,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    secure: process.env.NODE_ENV === 'production',
     store: store,
     cookie: { maxAge: 30000 }
 }))
