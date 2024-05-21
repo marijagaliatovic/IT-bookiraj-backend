@@ -7,7 +7,7 @@ router.get('/', (req,res) => {
     console.log("req.session.passport: " + req.session.passport)
     console.log("Is user authenticated after authentication:", req.isAuthenticated());
     //res.redirect('login/profile')
-    res.send("req.session: " + req.session)
+    res.send("req.session: " + JSON.stringify(req.session))
 })     
 
 router.post('/', passport.authenticate('local', {
