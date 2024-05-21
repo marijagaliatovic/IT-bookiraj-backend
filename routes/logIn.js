@@ -43,17 +43,17 @@ router.get('/user/:userId', async (req, res) => {
     }
 });
 
-router.get('/status', (req, res) => {
+/* router.get('/status', (req, res) => {
   const isAut = isAuthenticated(req,res);
   console.log("isAut:" + isAut);
   if(!isAut){
-    return res.send({ authenticated: isAut, user: req.user });
+    res.json({ authenticated: false, user: null });
   }
   else{
     console.log("User is authenticated " + req.user)
-    return res.send({ authenticated: isAut, user: req.user }); 
+    res.json({ authenticated: isAut, user: req.user }); 
   }
-  }); 
+  }); */
 
 router.post('/logOut', (req,res) =>{
   req.logout(err => {
@@ -67,15 +67,18 @@ router.post('/logOut', (req,res) =>{
       }
       // Clear the session cookie
       res.clearCookie('connect.sid'); // 'connect.sid' is the default cookie name for Express sessions
-      console.log("Session: " + res.session.User);
       return res.status(200).json({ message: 'Logged out successfully' });
     });
   });
   }) 
  
-function isAuthenticated(req, res) { 
-    if(req.passport.User){
-      console.log("req.user" + req.passport.user);
+function isAuthenticated(req, res) {
+    if (req.isAuthenticated()) {
+      return true; // User is authenticated, proceed to the next middleware
+    }
+    //return res.status(401).json({ message: 'Unauthorized' }); 
+    if(req.user != null){
+      console.log("req.user" + req.user);
       return true;
     }
     return false;
