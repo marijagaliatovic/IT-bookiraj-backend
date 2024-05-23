@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt')
 
 router.get('/', (req, res) => {
     console.log("Session: " + JSON.stringify(req.session))
-    res.json({ message: "hello  " + req.user});
+    res.json({ message: "hello  " + req.session.passport.user});
 });
 /* 
 router.post('/', passport.authenticate('local',{
