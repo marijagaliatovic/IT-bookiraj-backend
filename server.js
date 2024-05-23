@@ -66,7 +66,7 @@ app.get('/', (req,res)=>{
     res.json({message:"First message"})
 })
 
-app.get('/logout', (req, res) => {
+app.post('/logout', (req, res) => {
     req.logout(err => {
         if (err) {
             return next(err);
