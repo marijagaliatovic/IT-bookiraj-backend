@@ -74,13 +74,6 @@ router.get('/status', (req, res) => {
 }) */
  
 
-router.post('/logout', function (req, res){
-  req.session.destroy(function() {
-    res.clearCookie('connect.sid');
-    res.redirect('/');
-  });
-});
-
 function isAuthenticated(req, res) {
     if (req.isAuthenticated()) {
       return true; // User is authenticated, proceed to the next middleware
