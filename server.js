@@ -66,15 +66,17 @@ app.get('/', (req,res)=>{
     res.json({message:"First message"})
 })
 
-app.get('/logout', function (req, res){
-    (req, res) => {
-        req.logout();
-        req.session.destroy(()=>{
+app.get('/logout', (req, res) => {
+    req.logout(err => {
+        if (err) {
+            return next(err);
+        }
+        req.session.destroy(() => {
             res.clearCookie('connect.sid');
             res.redirect('/');
         });
-    }
-})
+    });
+});
 
 app.listen(process.env.PORT || 8080)
 
