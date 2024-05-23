@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 
 
 router.get('/', (req, res) => {
-    console.log("Session: " + JSON.stringify(req.session.passport))
+    console.log("Session: " + JSON.stringify(req.session))
     res.json({ message: "hello  " + req.user});
 });
 /* 

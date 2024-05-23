@@ -18,7 +18,7 @@ router.post('/', passport.authenticate('local', {
          res.status(200).json(req.session);
         // Log session data 
         console.log("Is user authenticated after authentication:", req.isAuthenticated());
-        console.log("Session data after authenticaytion:", req.session);
+        console.log("Session data after authenticaytion:", req.session.passport.user);
     })
 
 /* router.get('/profile', (req, res) => {
