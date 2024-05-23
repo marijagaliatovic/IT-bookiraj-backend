@@ -55,23 +55,23 @@ router.get('/status', (req, res) => {
   }
   });
 
-  router.post('/logOut', (req,res) =>{
-    req.logout(err => {
-      if (err) {
-        return res.status(500).json({ message: 'Logout failed' });
-      }
+router.post('/logOut', (req,res) =>{
+  req.logout(err => {
+    if (err) {
+      return res.status(500).json({ message: 'Logout failed' });
+    }
 
-      req.session.destroy(err => {
-        if (err) {
-          return res.status(500).json({ message: 'Session destruction failed' });
-        }
-        
-        res.clearCookie('connect.sid'); 
-        return 
-        res.status(200).json({ message: 'Logged out successfully' });
-      });
+    req.session.destroy(err => {
+      if (err) {
+        return res.status(500).json({ message: 'Session destruction failed' });
+      }
+      
+      res.clearCookie('connect.sid'); 
+      return 
+      res.status(200).json({ message: 'Logged out successfully' });
     });
-    })
+  });
+})
  
 function isAuthenticated(req, res) {
     if (req.isAuthenticated()) {
