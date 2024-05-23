@@ -59,6 +59,13 @@ const db = mongoose.connection
 db.on('error', error => console.error(error))
 db.once('open', ()=>{console.log('Connected to Mongoose')})
 
+app.use((req, res, next) => {
+    console.log('Session before route handler:', req.session);
+    next();
+    console.log('Session after route handler:', req.session);
+});
+
+
 app.use('/signUp',signInRouter)
 app.use('/logIn',logInRouter)
 
