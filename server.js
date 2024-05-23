@@ -80,7 +80,7 @@ app.post('/logout', (req, res, next) => {
             }
             res.clearCookie('connect.sid');
             if(!req.session){
-                console.log('User logged out and session destroyed');
+                console.log('User logged out and session destroyed' + req.session);
                 res.redirect('/');
             }
     
