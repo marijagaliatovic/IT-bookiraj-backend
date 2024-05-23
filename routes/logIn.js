@@ -55,7 +55,7 @@ router.get('/status', (req, res) => {
   }
   });
 
-router.post('/logOut', (req,res) =>{
+/* router.post('/logOut', (req,res) =>{
   req.logout(err => {
     if (err) {
       return res.status(500).json({ message: 'Logout failed' });
@@ -71,8 +71,15 @@ router.post('/logOut', (req,res) =>{
       res.status(200).json({ message: 'Logged out successfully' });
     });
   });
-})
+}) */
  
+router.post('/logout', function(req, res, next){
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    res.redirect('/');
+  });
+});
+
 function isAuthenticated(req, res) {
     if (req.isAuthenticated()) {
       return true; // User is authenticated, proceed to the next middleware
