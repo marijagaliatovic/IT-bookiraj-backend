@@ -79,8 +79,11 @@ app.post('/logout', (req, res, next) => {
                 return next(err);
             }
             res.clearCookie('connect.sid');
-            console.log('User logged out and session destroyed');
-            res.redirect('/');
+            if(!req.session){
+                console.log('User logged out and session destroyed');
+                res.redirect('/');
+            }
+    
         });
     });
 });
