@@ -66,13 +66,20 @@ app.get('/', (req,res)=>{
     res.json({message:"First message"})
 })
 
-app.post('/logout', (req, res) => {
+app.post('/logout', (req, res, next) => {
+    console.log('Logout route called');
     req.logout(err => {
         if (err) {
+            console.error('Logout error:', err);
             return next(err);
         }
-        req.session.destroy(() => {
+        req.session.destroy(err => {
+            if (err) {
+                console.error('Session destruction error:', err);
+                return next(err);
+            }
             res.clearCookie('connect.sid');
+            console.log('User logged out and session destroyed');
             res.redirect('/');
         });
     });
