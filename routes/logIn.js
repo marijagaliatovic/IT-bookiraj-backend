@@ -73,9 +73,10 @@ router.get('/status', (req, res) => {
   });
 }) */
  
-router.post('/logout', function(req, res, next){
-  req.logout(function(err) {
-    if (err) { return next(err); }
+
+router.post('/logout', function (req, res){
+  req.session.destroy(function() {
+    res.clearCookie('connect.sid');
     res.redirect('/');
   });
 });
