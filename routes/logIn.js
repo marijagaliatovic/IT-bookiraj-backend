@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport')
 const User = require("../models/signIn");
-
+const flash = require('express-flash')
 router.use(flash());
 
 router.get('/', (req,res) => {
