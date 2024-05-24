@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport')
 const User = require("../models/signIn");
-const flash = require('express-flash')
+const flash = require('connect-flash')
 router.use(flash());
 
 router.get('/', (req,res) => {
@@ -13,7 +13,6 @@ router.get('/', (req,res) => {
 })     
 
 router.post('/', passport.authenticate('local', {
-        failureRedirect: '../signUp',
         failureFlash: true,
         successFlash:true
     }), (req, res) => {
