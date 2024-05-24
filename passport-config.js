@@ -7,7 +7,7 @@ function initialize(passport, getUserByEmail, getUserById) {
     console.log("email: " + email)
     const user =  await getUserByEmail(email)
     console.log("User: " + user)
-    if (user == null) {
+    if (!user) {
       return done(null, false, { message: 'No user with that email' })
     }
   

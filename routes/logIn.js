@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport')
 const User = require("../models/signIn");
-const flash = require('connect-flash')
-router.use(flash());
 
 router.get('/', (req,res) => {
     console.log("req.session.passport: " + req.session.passport)
@@ -12,14 +10,15 @@ router.get('/', (req,res) => {
     res.send('Log')
 })     
 
-router.post('/', passport.authenticate('local', {
-        failureFlash: true,
-        successFlash:true
-    }), (req, res) => {
-         res.status(200).json(req.session);
-        // Log session data 
-        console.log("Is user authenticated after authentication:", req.isAuthenticated());
-        console.log("Session data after authenticaytion:", req.session.passport.user);
+router.post('/',(req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) { return next(err); }
+    if (!user) { return res.status(401).json({ message: info.message }); }
+    req.logIn(user, (err) => {
+      if (err) { return next(err); }
+      return res.status(200).json({ message: 'Login successful', user });
+    });
+  })(req, res, next);
     })
 
 /* router.get('/profile', (req, res) => {
