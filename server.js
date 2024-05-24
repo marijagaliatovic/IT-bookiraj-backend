@@ -41,6 +41,7 @@ initializePassport(passport,
     id =>  User.findById(id)
 )
 
+app.use(flash())
 
 app.use(passport.session())
 app.use(passport.initialize())
