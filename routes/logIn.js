@@ -11,8 +11,9 @@ router.get('/', (req,res) => {
 })     
 
 router.post('/', passport.authenticate('local', {
+        failureRedirect: '../signUp',
         failureFlash: true,
-        successFlash:true,
+        successFlash:true
     }), (req, res) => {
          res.status(200).json(req.session);
     })
@@ -69,6 +70,13 @@ router.get('/status', (req, res) => {
   });
 }) */
  
+
+router.post('/logout', function (req, res){
+  req.session.destroy(function() {
+    res.clearCookie('connect.sid');
+    res.redirect('/');
+  });
+});
 
 function isAuthenticated(req, res) {
     if (req.isAuthenticated()) {
