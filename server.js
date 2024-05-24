@@ -7,7 +7,7 @@ const cors = require('cors')
 const app = express()
 const bodyParser = require('body-parser')
 const passport = require('passport') //authentication middleware 
-
+const flash = require('express-flash')
 const session = require('express-session')
 const MongoStore = require('connect-mongo');
 const methodOverride = require('method-override')
