@@ -3,6 +3,8 @@ const router = express.Router();
 const passport = require('passport')
 const User = require("../models/signIn");
 
+router.use(flash());
+
 router.get('/', (req,res) => {
     console.log("req.session.passport: " + req.session.passport)
     console.log("Is user authenticated after authentication:", req.isAuthenticated());
