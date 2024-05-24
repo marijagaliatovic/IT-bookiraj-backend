@@ -7,7 +7,7 @@ const cors = require('cors')
 const app = express()
 const bodyParser = require('body-parser')
 const passport = require('passport') //authentication middleware 
-const flash = require('express-flash')
+const flash = require('connect-flash')
 const session = require('express-session')
 const MongoStore = require('connect-mongo');
 const methodOverride = require('method-override')
@@ -41,10 +41,15 @@ initializePassport(passport,
     id =>  User.findById(id)
 )
 
-app.use(flash())
-
 app.use(passport.session())
 app.use(passport.initialize())
+app.use(flash())
+
+app.use((req, res, next) => {
+    res.locals.successMessage = req.flash('success');
+    res.locals.errorMessage = req.flash('error');
+    next();
+});
 
 const signInRouter = require('./routes/signIn')
 const logInRouter = require('./routes/logIn')

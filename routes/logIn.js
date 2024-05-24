@@ -12,12 +12,9 @@ router.get('/', (req,res) => {
 
 router.post('/', passport.authenticate('local', {
         failureFlash: true,
-        successFlash:true
+        successFlash:true,
     }), (req, res) => {
          res.status(200).json(req.session);
-        // Log session data 
-        console.log("Is user authenticated after authentication:", req.isAuthenticated());
-        console.log("Session data after authenticaytion:", req.session.passport.user);
     })
 
 /* router.get('/profile', (req, res) => {
