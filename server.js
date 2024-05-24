@@ -41,7 +41,7 @@ initializePassport(passport,
     id =>  User.findById(id)
 )
 
-app.use(flash())
+//app.use(flash())
 
 app.use(passport.session())
 app.use(passport.initialize())
@@ -58,6 +58,11 @@ mongoose.connect(process.env.DATABASE_URL)
 const db = mongoose.connection
 db.on('error', error => console.error(error))
 db.once('open', ()=>{console.log('Connected to Mongoose')})
+
+app.use((req, res, next) => {
+    next();
+});
+
 
 app.use('/signUp',signInRouter)
 app.use('/logIn',logInRouter)
