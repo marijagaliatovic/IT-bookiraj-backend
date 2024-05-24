@@ -10,21 +10,13 @@ router.get('/', (req,res) => {
     res.send('Log')
 })     
 
-router.post('/', passport.authenticate(
-  'local',
-  (err,user,info) =>{
-    if(!user){
-      console.log("User is null")
-      res.status(200).json({ message: info.message });
-    }
-    if(err){
-      console.log("Err: ",err)
-      res.status(200).json({ message: info.message });
-    }
-  },
-  (req, res) => {
-    res.status(200).json(req.session);
-  }))
+router.post('/', passport.authenticate('local', {
+        failureRedirect: '../signUp',
+        failureFlash: true,
+        successFlash:true
+    }), (req, res) => {
+         res.status(200).json(req.session);
+    })
 
 /* router.get('/profile', (req, res) => {
     res.send('Welcome to your profile: ' + JSON.stringify(req.session));
