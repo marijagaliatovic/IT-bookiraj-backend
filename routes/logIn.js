@@ -13,21 +13,18 @@ router.get('/', (req,res) => {
 router.post('/', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
       if (err) { 
-          console.log("Error when logging in: " + err);
           return next(err); 
       }
       if (!user) { 
-          console.log("!user: " + info.message);
           req.flash('error', info.message);
-          return res.redirect('/logIn');
+          return res.status(401).json({ message: info.message }); // Return JSON response with error message
       }
       req.logIn(user, err => {
           if (err) { 
-            console.log("Error when logging in 2: " + err);
               return next(err); 
           }
           req.flash('success', 'Successfully logged in');
-          return res.redirect('/'); // Redirect to home or dashboard
+          return res.status(200).json({ message: 'Successfully logged in', user: user }); // Return JSON response with user data
       });
   })(req, res, next);
 });
