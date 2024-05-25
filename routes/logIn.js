@@ -7,23 +7,15 @@ router.get('/', (req,res) => {
     console.log("req.session.passport: " + req.session.passport)
     console.log("Is user authenticated after authentication:", req.isAuthenticated());
     //res.redirect('login/profile')
-    res.json({message:'Log'})
+    res.send('Log')
 })     
 
-router.post('/', (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-      if (err) { 
-          return next(err); 
-      }
-      if (!user) { 
-          req.flash('error', info.message);
-          return res.status(401).json({ message: info.message }); 
-      }
-      else{
-          return res.status(200).json({user: user }); 
-      }
-  })(req, res, next);
-});
+router.post('/', passport.authenticate('local', {
+        failureRedirect: '../signUp',
+        failureFlash: true,
+    }), (req, res) => {
+         res.status(200).json(req.session);
+    })
 
 /* router.get('/profile', (req, res) => {
     res.send('Welcome to your profile: ' + JSON.stringify(req.session));
