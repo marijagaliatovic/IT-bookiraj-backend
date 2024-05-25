@@ -28,6 +28,9 @@ app.use(cors({
     credentials: true
   }));
 
+app.use(bodyParser.json()); // Parse JSON request bodies
+app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded request bodies
+
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -36,14 +39,15 @@ app.use(session({
     cookie: { maxAge: 30000 }
 }))
 
+app.use(flash())
+
+app.use(passport.initialize())
+app.use(passport.session())
+
 initializePassport(passport, 
     email => User.findOne({ email }),  // Using findOne() instead of find() to find a single document
     id =>  User.findById(id)
 )
-
-app.use(passport.session())
-app.use(passport.initialize())
-app.use(flash())
 
 app.use((req, res, next) => {
     res.locals.successMessage = req.flash('success');
@@ -51,26 +55,19 @@ app.use((req, res, next) => {
     next();
 });
 
-const signInRouter = require('./routes/signIn')
-const logInRouter = require('./routes/logIn')
-
-app.use(bodyParser.json()); // Parse JSON request bodies
-app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded request bodies
-app.use(methodOverride('_method'))
-
 mongoose.connect(process.env.DATABASE_URL)
 
 const db = mongoose.connection
 db.on('error', error => console.error(error))
 db.once('open', ()=>{console.log('Connected to Mongoose')})
 
-app.use((req, res, next) => {
-    next();
-});
-
+const signInRouter = require('./routes/signIn')
+const logInRouter = require('./routes/logIn')
 
 app.use('/signUp',signInRouter)
 app.use('/logIn',logInRouter)
+
+app.use(methodOverride('_method'))
 
 app.get('/', (req,res)=>{
     res.json({message:"First message"})
