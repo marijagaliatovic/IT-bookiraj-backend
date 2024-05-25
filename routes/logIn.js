@@ -10,12 +10,24 @@ router.get('/', (req,res) => {
     res.send('Log')
 })     
 
-router.post('/', passport.authenticate('local', {
-        failureRedirect: '../signUp',
-        failureFlash: true,
-    }), (req, res) => {
-         res.status(200).json(req.session);
-    })
+router.post('/', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+      if (err) { 
+          return next(err); 
+      }
+      if (!user) { 
+          req.flash('error', info.message);
+          return res.redirect('/logIn');
+      }
+      req.logIn(user, err => {
+          if (err) { 
+              return next(err); 
+          }
+          req.flash('success', 'Successfully logged in');
+          return res.redirect('/'); // Redirect to home or dashboard
+      });
+  })(req, res, next);
+});
 
 /* router.get('/profile', (req, res) => {
     res.send('Welcome to your profile: ' + JSON.stringify(req.session));
