@@ -13,14 +13,17 @@ router.get('/', (req,res) => {
 router.post('/', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
       if (err) { 
+          console.log("Error when logging in: " + err);
           return next(err); 
       }
       if (!user) { 
+          console.log("!user: " + info.message);
           req.flash('error', info.message);
           return res.redirect('/logIn');
       }
       req.logIn(user, err => {
           if (err) { 
+            console.log("Error when logging in 2: " + err);
               return next(err); 
           }
           req.flash('success', 'Successfully logged in');
