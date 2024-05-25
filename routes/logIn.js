@@ -17,14 +17,13 @@ router.post('/', (req, res, next) => {
       }
       if (!user) { 
           req.flash('error', info.message);
-          return res.status(401).json({ message: info.message }); // Return JSON response with error message
+          return res.status(401).json({ message: info.message }); 
       }
       req.logIn(user, err => {
           if (err) { 
               return next(err); 
           }
-          req.flash('success', 'Successfully logged in');
-          return res.status(200).json({ message: 'Successfully logged in', user: user }); // Return JSON response with user data
+          return res.status(200).json({user: user }); 
       });
   })(req, res, next);
 });
