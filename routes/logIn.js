@@ -19,12 +19,9 @@ router.post('/', (req, res, next) => {
           req.flash('error', info.message);
           return res.status(401).json({ message: info.message }); 
       }
-      req.logIn(user, err => {
-          if (err) { 
-              return next(err); 
-          }
+      else{
           return res.status(200).json({user: user }); 
-      });
+      }
   })(req, res, next);
 });
 
