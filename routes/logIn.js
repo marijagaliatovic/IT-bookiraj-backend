@@ -11,8 +11,8 @@ router.get('/', (req,res) => {
 })     
 
 router.post('/', passport.authenticate('local', {
-        failureRedirect: '../signUp',
         failureFlash: true,
+        successFlash:true
     }), (req, res) => {
          res.status(200).json(req.session);
     })
